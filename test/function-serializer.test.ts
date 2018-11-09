@@ -14,7 +14,7 @@ describe('Function serializer', () => {
       return null
     }
 
-    await expect(serialize(promisify(errornous))()).rejects.toThrowError()
+    await expect(serialize(promisify(errornous))()).rejects.toThrowError('Error')
   })
 
   it('Should propagate error 2', async () => {
@@ -26,8 +26,7 @@ describe('Function serializer', () => {
       return 0
     }
 
-    await expect(errornous()).rejects.toThrow()
-    // expect(serialize(errornous)).toThrowError()
+    await expect(errornous()).rejects.toThrowError('Error')
   })
 
   it('Should not cause data lost', async () => {
@@ -45,7 +44,6 @@ describe('Function serializer', () => {
     }
 
     const coolIncrement = serialize(promisify(increment))
-    // const coolIncrement = promisify(increment)
     await Promise.all([
       coolIncrement(),
       coolIncrement(),
