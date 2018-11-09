@@ -5,6 +5,15 @@ import { promisify } from '../src/Utils'
  * Dummy test
  */
 describe('Function serializer', () => {
+  it('should have the proper typings', async () => {
+    async function add(x: number, y: number) {
+      return x + y
+    }
+
+    const serializedAdd = serialize(add)
+    await serializedAdd(1, 2)
+  })
+
   it('Should propagate error', async () => {
     function* errornous() {
       const value = true
