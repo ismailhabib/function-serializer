@@ -1,6 +1,6 @@
-export type MailBoxMessage = {
-  payload: unknown[]
-  callback: (result?: unknown, error?: unknown) => void
+export type MailBoxMessage<T extends any[], U> = {
+  payload: T
+  callback: (result?: U, error?: unknown) => void
 }
 
 export type Options = {
@@ -12,7 +12,7 @@ export function serialize<T extends any[], U>(
   func: (...args: T) => Promise<U>,
   options: Options = {}
 ) {
-  const mailBox: MailBoxMessage[] = []
+  const mailBox: MailBoxMessage<T, U>[] = []
 
   let timerId: any | null = null
 
@@ -22,7 +22,7 @@ export function serialize<T extends any[], U>(
     const { payload, callback } = mail!
 
     try {
-      result = await func(...(payload as T))
+      result = await func(...payload)
       callback(result)
     } catch (e) {
       callback(undefined, e)
@@ -54,7 +54,7 @@ export function serialize<T extends any[], U>(
           if (error) {
             reject(error)
           } else {
-            resolve(result as U)
+            resolve(result)
           }
         }
       })
