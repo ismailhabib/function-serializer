@@ -26,7 +26,7 @@ npm install function-serializer
 
 ## Usage Example
 
-```
+```Typescript
 function delay(time: number) {
   return new Promise((resolve, reject) => {
     setTimeout(resolve, time)
